@@ -85,7 +85,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       webhook: { id: webhookId, url, secret, events, active: 1, created_at: now },
-      webhook_notice: 'Store this secret now — it will not be shown again.',
+      secret_warning: 'Store this secret now — it will not be shown again.',
     }, { status: 201 });
   } catch (error) {
     console.error('Webhooks POST error:', error);

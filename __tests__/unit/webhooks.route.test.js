@@ -28,7 +28,7 @@ describe('/api/webhooks GET', () => {
       {
         id: 'wh_1',
         url: 'https://example.com/hook',
-        secret: 'a'.repeat(32),
+        secret: 'webhook_test_secret_5678zz',
         events: ['all'],
         active: 1,
         failure_count: 0,
