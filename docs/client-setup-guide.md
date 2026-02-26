@@ -1418,6 +1418,10 @@ node .claude/skills/dashclaw-platform-intelligence/scripts/bootstrap-agent-quick
   --dir "/path/to/agent" --agent-id "my-agent" --validate
 ```
 
+Upload notes for Claude skill packages:
+- Keep `SKILL.md` frontmatter `description` at or under 1024 characters.
+- Zip with forward-slash entry paths (`/`), not Windows backslash paths (`\`), to avoid "invalid characters" upload errors.
+
 ### Report an Action (from terminal)
 
 ```bash

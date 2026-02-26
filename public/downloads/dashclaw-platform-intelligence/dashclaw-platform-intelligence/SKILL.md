@@ -1,18 +1,16 @@
 ---
 name: dashclaw-platform-intelligence
 description: >
-  DashClaw platform expert (v2.1). Instruments agents, troubleshoots errors, scaffolds API
-  routes, generates SDK clients, designs policies, bootstraps agents, configures evaluations,
-  manages prompts, collects feedback, exports compliance bundles, monitors drift, tracks learning velocity, and configures scoring profiles. Use when the user mentions: DashClaw, real-time streaming, Mission Control,
-  decision timeline, recording actions, policy/guard, compliance, security signals, agent pairing,
-  SDK (dashclaw.js, client.py), API routes, 401/403/429/503 errors, org context, x-api-key,
-  workspace features (handoffs, threads, snippets, memory, preferences), task routing, webhooks,
-  token budgets, risk scoring, loops, assumptions, drift detection, evaluations, scorers,
-  prompt templates, prompt versioning, user feedback, compliance export, learning analytics,
-  learning velocity, agent maturity, scoring profiles, risk templates, auto-calibration, quality dimensions, or vague requests like "instrument my agent", "track decisions",
-  "connect my agent", "why am I getting a 403", "set up my agent", "add monitoring",
-  "evaluate my agent", "score outputs", "manage prompts", "collect feedback", "export compliance",
-  "detect drift", "track learning", "score quality", "define scoring", "calibrate", "risk template".
+  DashClaw platform expert for integration, troubleshooting, and governance. Use when working
+  with DashClaw APIs/SDKs or related concepts: instrumenting agents, action recording,
+  guard/policy checks, SSE real-time events, org/workspace context, auth headers (`x-api-key`),
+  and common errors (401/403/429/503). Also use for building DashClaw API routes, generating
+  SDK/client methods, bootstrapping agent data, configuring evaluations/scorers, prompt
+  templates/versioning, feedback capture, compliance exports, drift monitoring, learning
+  analytics/velocity, and scoring profiles or risk templates. Trigger on requests like
+  "instrument my agent", "connect my agent", "why am I getting a 403", "set up monitoring",
+  "evaluate or score outputs", "manage prompts", "collect feedback", "export compliance",
+  "detect drift", or "track learning".
 ---
 
 # DashClaw Platform Intelligence (v2.1)

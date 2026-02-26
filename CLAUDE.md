@@ -101,6 +101,9 @@ If you see "redirect_uri is not associated with this application", your OAuth ap
 The project includes a Claude Code skill for platform-level operations:
 
 - `.claude/skills/dashclaw-platform-intelligence/` -- DashClaw platform expert skill. Handles agent instrumentation, troubleshooting, API route scaffolding, SDK client generation, policy design, and agent bootstrapping. Includes companion scripts for integration validation and diagnostics.
+- Packaging constraints for Claude skill uploads:
+  - `SKILL.md` frontmatter `description` must be <= 1024 characters.
+  - Build ZIPs with POSIX entry separators (`/`), not Windows backslashes (`\`), or upload may fail with invalid path errors.
 
 ## Where To Look First
 
