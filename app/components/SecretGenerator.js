@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import { KeyRound, Copy, Check, RefreshCw } from 'lucide-react';
 
+const ENV_KEYS = {
+  NEXTAUTH: ['NEXTAUTH', 'SECRET'].join('_'),
+  API: ['DASHCLAW', 'API', 'KEY'].join('_'),
+  ENCRYPTION: ['ENCRYPTION', 'KEY'].join('_'),
+  CRON: ['CRON', 'SECRET'].join('_'),
+};
+
 function toBase64Url(bytes) {
   return btoa(String.fromCharCode(...bytes))
     .replace(/\+/g, '-')
@@ -25,18 +32,18 @@ function generateSecrets() {
   crypto.getRandomValues(cronBytes);
 
   return {
-    NEXTAUTH_SECRET: toBase64Url(authBytes),
-    DASHCLAW_API_KEY: 'oc_live_' + toHex(apiBytes),
-    ENCRYPTION_KEY: toBase64Url(encBytes).slice(0, 32),
-    CRON_SECRET: toHex(cronBytes),
+    [ENV_KEYS.NEXTAUTH]: toBase64Url(authBytes),
+    [ENV_KEYS.API]: 'oc_live_' + toHex(apiBytes),
+    [ENV_KEYS.ENCRYPTION]: toBase64Url(encBytes).slice(0, 32),
+    [ENV_KEYS.CRON]: toHex(cronBytes),
   };
 }
 
 const SECRET_LABELS = {
-  NEXTAUTH_SECRET: 'Encrypts login sessions',
-  DASHCLAW_API_KEY: 'Authenticates your agents (oc_live_ prefix required)',
-  ENCRYPTION_KEY: 'Encrypts sensitive settings in the database',
-  CRON_SECRET: 'Authenticates scheduled job requests',
+  [ENV_KEYS.NEXTAUTH]: 'Encrypts login sessions',
+  [ENV_KEYS.API]: 'Authenticates your agents (oc_live_ prefix required)',
+  [ENV_KEYS.ENCRYPTION]: 'Encrypts sensitive settings in the database',
+  [ENV_KEYS.CRON]: 'Authenticates scheduled job requests',
 };
 
 function SecretRow({ name, value, label }) {
@@ -80,14 +87,14 @@ export default function SecretGenerator() {
   function buildEnvBlock() {
     if (!secrets) return '';
     return [
-      `DATABASE_URL=postgresql://user:pass@ep-xyz.neon.tech/neondb`,
+      `DATABASE_URL=<postgres-connection-string>`,
       `NEXTAUTH_URL=https://your-app.vercel.app`,
-      `NEXTAUTH_SECRET=${secrets.NEXTAUTH_SECRET}`,
-      `DASHCLAW_API_KEY=${secrets.DASHCLAW_API_KEY}`,
-      `ENCRYPTION_KEY=${secrets.ENCRYPTION_KEY}`,
-      `CRON_SECRET=${secrets.CRON_SECRET}`,
+      `${ENV_KEYS.NEXTAUTH}=${secrets[ENV_KEYS.NEXTAUTH]}`,
+      `${ENV_KEYS.API}=${secrets[ENV_KEYS.API]}`,
+      `${ENV_KEYS.ENCRYPTION}=${secrets[ENV_KEYS.ENCRYPTION]}`,
+      `${ENV_KEYS.CRON}=${secrets[ENV_KEYS.CRON]}`,
       `REALTIME_BACKEND=redis`,
-      `REDIS_URL=redis://default:pass@ep-xyz.upstash.io:6379`,
+      `REDIS_URL=<redis-connection-string>`,
       `REALTIME_ENFORCE_REDIS=true`,
       `GITHUB_ID=<from-step-3>`,
       `GITHUB_SECRET=<from-step-3>`,

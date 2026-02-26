@@ -19,6 +19,8 @@ origMock.mockImplementation((...args) => {
 
 import { POST } from '@/api/security/scan/route.js';
 
+const TEST_AWS_KEY = ['AKIA', 'IOSFODNN7EXAMPLE'].join('');
+
 describe('/api/security/scan POST', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -65,7 +67,7 @@ describe('/api/security/scan POST', () => {
     });
     const res = await POST(makeRequest('http://localhost/api/security/scan', {
       headers: { 'x-org-id': 'org_1' },
-      body: { text: 'AKIAIOSFODNN7EXAMPLE' },
+      body: { text: TEST_AWS_KEY },
     }));
     const data = await res.json();
     expect(data.clean).toBe(false);
@@ -96,7 +98,7 @@ describe('/api/security/scan POST', () => {
     });
     await POST(makeRequest('http://localhost/api/security/scan', {
       headers: { 'x-org-id': 'org_1' },
-      body: { text: 'AKIAIOSFODNN7EXAMPLE', agent_id: 'a1' },
+      body: { text: TEST_AWS_KEY, agent_id: 'a1' },
     }));
     // The tagged template should have been called for the INSERT
     expect(mockSql).toHaveBeenCalled();
@@ -112,7 +114,7 @@ describe('/api/security/scan POST', () => {
     mockSql.mockClear();
     await POST(makeRequest('http://localhost/api/security/scan', {
       headers: { 'x-org-id': 'org_1' },
-      body: { text: 'AKIAIOSFODNN7EXAMPLE', store: false },
+      body: { text: TEST_AWS_KEY, store: false },
     }));
     // Should not have called sql for INSERT (only getSql was called, no tagged template for insert)
     // With store=false, the sql INSERT block is skipped

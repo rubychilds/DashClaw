@@ -28,7 +28,7 @@ if (hasGitHub) {
 } else if (!isProd) {
   providers.push(GitHubProvider({
     clientId: 'mock_github_id',
-    clientSecret: 'mock_github_secret',
+    clientSecret: crypto.randomBytes(24).toString('hex'),
   }));
 }
 
@@ -40,7 +40,7 @@ if (hasGoogle) {
 } else if (!isProd) {
   providers.push(GoogleProvider({
     clientId: 'mock_google_id',
-    clientSecret: 'mock_google_secret',
+    clientSecret: crypto.randomBytes(24).toString('hex'),
   }));
 }
 

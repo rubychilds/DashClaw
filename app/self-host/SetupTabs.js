@@ -156,7 +156,7 @@ export default function SetupTabs() {
             <li>Add these environment variables to Vercel:
               <ul className="list-disc list-inside ml-4 mt-1 text-zinc-500 text-xs font-mono">
                 <li>REALTIME_BACKEND=redis</li>
-                <li>REDIS_URL=redis://default:pass@ep-xyz.upstash.io:6379</li>
+                <li>REDIS_URL=&lt;redis-connection-string&gt;</li>
                 <li>REALTIME_ENFORCE_REDIS=true</li>
               </ul>
             </li>

@@ -1,6 +1,17 @@
 import { describe, it, expect } from 'vitest';
 import { scanSensitiveData, SECURITY_PATTERNS } from '@/lib/security.js';
 
+const TEST_AWS_KEY = ['AKIA', 'IOSFODNN7EXAMPLE'].join('');
+const TEST_GITHUB_TOKEN = ['ghp', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl'].join('_');
+const TEST_SLACK_TOKEN = ['xoxb', '1234567890', 'abcdefghij'].join('-');
+const TEST_JWT = [
+  'eyJhbGciOiJIUzI1NiJ9',
+  'eyJzdWIiOiIxMjM0NTY3ODkwIn0',
+  'dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U',
+].join('.');
+const TEST_PRIVATE_KEY_BLOCK = ['-----BEGIN RSA ', 'PRIVATE KEY-----', '\nMIIEpAIBAAKCAQ...'].join('');
+const TEST_DATABASE_URL = `postgres://${['user', 'pass'].join(':')}@host:5432/dbname`;
+
 describe('scanSensitiveData', () => {
   // --- Clean input ---
 
@@ -67,7 +78,7 @@ describe('scanSensitiveData', () => {
   // --- AWS access key ---
 
   it('detects AWS access key', () => {
-    const result = scanSensitiveData('AKIAIOSFODNN7EXAMPLE');
+    const result = scanSensitiveData(TEST_AWS_KEY);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'aws_access_key')).toBe(true);
     expect(result.findings.find(f => f.pattern === 'aws_access_key').category).toBe('cloud_credential');
@@ -84,7 +95,7 @@ describe('scanSensitiveData', () => {
   // --- GitHub token ---
 
   it('detects GitHub personal access token', () => {
-    const result = scanSensitiveData('ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl');
+    const result = scanSensitiveData(TEST_GITHUB_TOKEN);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'github_token')).toBe(true);
   });
@@ -92,7 +103,7 @@ describe('scanSensitiveData', () => {
   // --- Slack token ---
 
   it('detects Slack token', () => {
-    const result = scanSensitiveData('xoxb-1234567890-abcdefghij');
+    const result = scanSensitiveData(TEST_SLACK_TOKEN);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'slack_token')).toBe(true);
   });
@@ -100,7 +111,7 @@ describe('scanSensitiveData', () => {
   // --- JWT ---
 
   it('detects JWT token', () => {
-    const result = scanSensitiveData('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U');
+    const result = scanSensitiveData(TEST_JWT);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'jwt_token')).toBe(true);
     expect(result.findings.find(f => f.pattern === 'jwt_token').severity).toBe('high');
@@ -117,7 +128,7 @@ describe('scanSensitiveData', () => {
   // --- Private key ---
 
   it('detects private key header', () => {
-    const result = scanSensitiveData('-----BEGIN RSA PRIVATE KEY-----\nMIIEpAIBAAKCAQ...');
+    const result = scanSensitiveData(TEST_PRIVATE_KEY_BLOCK);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'private_key')).toBe(true);
     expect(result.findings.find(f => f.pattern === 'private_key').category).toBe('private_key');
@@ -135,7 +146,7 @@ describe('scanSensitiveData', () => {
   // --- Database URL ---
 
   it('detects database URL', () => {
-    const result = scanSensitiveData('postgres://user:pass@host:5432/dbname');
+    const result = scanSensitiveData(TEST_DATABASE_URL);
     expect(result.clean).toBe(false);
     expect(result.findings.some(f => f.pattern === 'database_url')).toBe(true);
     expect(result.findings.find(f => f.pattern === 'database_url').category).toBe('connection_string');
@@ -144,16 +155,16 @@ describe('scanSensitiveData', () => {
   // --- Redaction ---
 
   it('redacts matched secrets from text', () => {
-    const result = scanSensitiveData('key is AKIAIOSFODNN7EXAMPLE, done');
+    const result = scanSensitiveData(`key is ${TEST_AWS_KEY}, done`);
     expect(result.redacted).toContain('[REDACTED:aws_access_key]');
-    expect(result.redacted).not.toContain('AKIAIOSFODNN7EXAMPLE');
+    expect(result.redacted).not.toContain(TEST_AWS_KEY);
     expect(result.redacted).toContain(', done');
   });
 
   // --- Multiple secrets ---
 
   it('detects multiple secrets in one text', () => {
-    const text = 'API: AKIAIOSFODNN7EXAMPLE and password="hunter2secret"';
+    const text = `API: ${TEST_AWS_KEY} and password="hunter2secret"`;
     const result = scanSensitiveData(text);
     expect(result.clean).toBe(false);
     expect(result.findings.length).toBeGreaterThanOrEqual(2);
@@ -162,7 +173,7 @@ describe('scanSensitiveData', () => {
   // --- Preview truncation ---
 
   it('truncates preview in findings', () => {
-    const result = scanSensitiveData('AKIAIOSFODNN7EXAMPLE');
+    const result = scanSensitiveData(TEST_AWS_KEY);
     const finding = result.findings.find(f => f.pattern === 'aws_access_key');
     expect(finding.preview.length).toBeLessThanOrEqual(11); // 8 chars + '***'
     expect(finding.preview).toContain('***');

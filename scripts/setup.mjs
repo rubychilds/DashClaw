@@ -91,6 +91,13 @@ function b64url(n) {
   return crypto.randomBytes(n).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
 }
 
+function redactSecret(value, keep = 4) {
+  if (!value) return '(unset)';
+  const text = String(value);
+  if (text.length <= keep) return '*'.repeat(text.length);
+  return `${'*'.repeat(Math.max(8, text.length - keep))}${text.slice(-keep)}`;
+}
+
 /* ── main ── */
 
 async function main() {
@@ -196,7 +203,7 @@ async function main() {
 
   writeEnvFile(env);
   ok('Wrote .env.local');
-  console.log(`\n  Your API key: ${env.DASHCLAW_API_KEY}`);
+  console.log(`\n  Your API key: ${redactSecret(env.DASHCLAW_API_KEY)}`);
   console.log(`  Dashboard URL: ${deployUrl}`);
 
   // ── Step 4: Install dependencies ──
@@ -282,10 +289,10 @@ async function main() {
     console.log(`     DASHCLAW_MODE    = self_host`);
     console.log(`     NEXT_PUBLIC_DASHCLAW_MODE = self_host`);
     console.log(`     NEXTAUTH_URL     = ${deployUrl}`);
-    console.log(`     NEXTAUTH_SECRET  = ${env.NEXTAUTH_SECRET}`);
-    console.log(`     DASHCLAW_API_KEY = ${env.DASHCLAW_API_KEY}`);
-    console.log(`     ENCRYPTION_KEY   = ${env.ENCRYPTION_KEY}`);
-    console.log(`     CRON_SECRET      = ${env.CRON_SECRET}`);
+    console.log(`     NEXTAUTH_SECRET  = ${redactSecret(env.NEXTAUTH_SECRET)}`);
+    console.log(`     DASHCLAW_API_KEY = ${redactSecret(env.DASHCLAW_API_KEY)}`);
+    console.log(`     ENCRYPTION_KEY   = ${redactSecret(env.ENCRYPTION_KEY)}`);
+    console.log(`     CRON_SECRET      = ${redactSecret(env.CRON_SECRET)}`);
     console.log('');
     console.log('  3. Set up GitHub OAuth:');
     console.log('     https://github.com/settings/developers → New OAuth App');
@@ -302,7 +309,7 @@ async function main() {
   console.log('\n  ─────────────────────────────────────────────');
   console.log('  Agent connection snippet (put this on agent machines):\n');
   console.log(`    DASHCLAW_BASE_URL=${deployUrl}`);
-  console.log(`    DASHCLAW_API_KEY=${env.DASHCLAW_API_KEY}`);
+  console.log('    DASHCLAW_API_KEY=<value-from-.env.local>');
   console.log('  ─────────────────────────────────────────────\n');
 }
 

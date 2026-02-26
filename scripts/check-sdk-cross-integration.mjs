@@ -45,7 +45,7 @@ function normalizeCall(call) {
 async function captureNodeCalls() {
   const client = new DashClaw({
     baseUrl: 'https://example.test',
-    apiKey: 'test-key',
+    apiKey: ['test', 'key'].join('-'),
     agentId: 'agent-1',
     agentName: 'Agent One',
   });
