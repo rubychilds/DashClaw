@@ -56,6 +56,28 @@ If you suspect heartbeats are being sent but not received:
     *   `_debug.heartbeat_source`: Confirmation that the `agent_presence` table is being read.
     *   `_debug.online_window_ms`: The currently configured timeout window.
 
+## Manual Approval Workflow
+
+Agents can request human approval for sensitive actions by explicitly setting the action status.
+
+**Requirements:**
+1.  **Status:** Must be set to `pending_approval`.
+2.  **Risk Score:** Must be **below** the blocking threshold (default: 80). If the score is too high, the Guard will block the action (403) before it can be queued.
+
+**Example (Node.js SDK):**
+
+```javascript
+await claw.createAction({
+  action_type: 'cleanup',
+  declared_goal: 'Delete production database backup',
+  status: 'pending_approval', // explicit request
+  risk_score: 50, // moderate risk (safe enough to queue)
+  metadata: { filename: 'backup.sql' }
+});
+```
+
+This action will appear in the Dashboard with a "Pending Approval" status, allowing an operator to Review and Approve/Reject it.
+
 ## SDK Best Practices
 
 To ensure accurate fleet visibility, configure your agents to send heartbeats.
