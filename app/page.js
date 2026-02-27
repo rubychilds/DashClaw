@@ -258,7 +258,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Built for the moment your agent does something unexpected</h2>
-            <p className="mt-3 text-zinc-400 max-w-xl mx-auto">Every feature exists to give you control over agents you can't watch manually.</p>
+            <p className="mt-3 text-zinc-400 max-w-xl mx-auto">Every feature exists to give you control over agents you cannot watch manually.</p>
           </div>
 
           {/* Core features: 2 col, larger */}
