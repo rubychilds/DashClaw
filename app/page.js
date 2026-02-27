@@ -167,21 +167,16 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(249,115,22,0.3)] bg-[rgba(249,115,22,0.08)] text-brand text-xs font-medium mb-6">
             <ShieldAlert size={14} />
-            Agent Decision Infrastructure
+            Open-source &middot; MIT Licensed &middot; Self-hosted
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
-            Prove what your AI agents decided{' '}
-            <span className="text-brand">and why</span>.
+            Your agents are making decisions.<br />
+            <span className="text-brand">Do you know which ones?</span>
           </h1>
           <p className="mt-6 text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Set a password, deploy to Vercel, paste one env var into your agent. No OAuth app
-            required. Your first governed decision shows up in the dashboard in under 10 minutes.
+            DashClaw is a governance control plane for AI agent fleets. It records every decision with reasoning, enforces policies before agents act, and surfaces risk signals before they become incidents. Connect your first agent in under 10 minutes.
           </p>
-          <div className="mt-4 flex items-center justify-center gap-6 text-sm text-zinc-500 font-medium">
-            <span className="flex items-center gap-1.5"><Zap size={14} className="text-brand" /> 177+ SDK methods</span>
-            <span className="flex items-center gap-1.5"><BookOpen size={14} className="text-brand" /> 29 categories</span>
-          </div>
-          <p className="mt-3 text-sm text-zinc-500">Open-source. Self-hosted. Built for teams shipping AI agents to production.</p>
+          <p className="mt-3 text-sm text-zinc-500">Open-source. Self-hosted. No OAuth required to get started.</p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-xs">
             <span className="rounded-full border border-[rgba(255,255,255,0.12)] bg-[#111] px-3 py-1 text-zinc-300">Policy guard</span>
             <span className="rounded-full border border-[rgba(255,255,255,0.12)] bg-[#111] px-3 py-1 text-zinc-300">Decision audit trail</span>
@@ -206,9 +201,9 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto pt-16">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
             <div className="lg:col-span-2">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">A dashboard you will actually use</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">One screen. Everything your fleet is doing.</h2>
               <p className="mt-3 text-zinc-400 leading-relaxed">
-                One screen for actions, risk, approvals, messages, and fleet context. Click the screenshot to view fullscreen.
+                Live actions, open risk signals, pending approvals, and agent context in a single view. Built for operators who need answers fast, not dashboards to maintain.
               </p>
               <div className="mt-5 flex flex-wrap gap-2 text-xs">
                 <span className="rounded-full border border-[rgba(255,255,255,0.12)] bg-[#111] px-3 py-1 text-zinc-300">Realtime</span>
@@ -237,8 +232,8 @@ export default function LandingPage() {
       <section className="py-20 px-6 border-t border-[rgba(255,255,255,0.06)]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Secure your first agent in 5 minutes</h2>
-            <p className="mt-3 text-zinc-400">Four steps from install to full decision governance.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Connect your first agent in 5 minutes</h2>
+            <p className="mt-3 text-zinc-400">Four steps from install to live decision governance. No OAuth app, no database setup, no DevOps.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
@@ -262,8 +257,8 @@ export default function LandingPage() {
       <section id="features" className="py-20 px-6 border-t border-[rgba(255,255,255,0.06)]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Everything you need to trust your agents</h2>
-            <p className="mt-3 text-zinc-400 max-w-xl mx-auto">Built for teams running autonomous AI agents in production.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Built for the moment your agent does something unexpected</h2>
+            <p className="mt-3 text-zinc-400 max-w-xl mx-auto">Every feature exists to give you control over agents you can't watch manually.</p>
           </div>
 
           {/* Core features: 2 col, larger */}
@@ -662,11 +657,10 @@ export default function LandingPage() {
       <section className="py-20 px-6 border-t border-[rgba(255,255,255,0.06)]">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Govern your first agent in 5 minutes
+            Get your first agent governed today
           </h2>
           <p className="mt-3 text-zinc-400">
-            No OAuth setup required to get started. Set one environment variable, deploy, and
-            connect your first agent. Open-source and self-hosted.
+            Deploy to Vercel, set a password, paste one env var into your agent. Your first decision shows up in the dashboard in under 10 minutes. Open-source, MIT licensed, no lock-in.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/self-host" className="px-6 py-2.5 rounded-lg bg-brand text-white text-sm font-medium hover:bg-brand-hover transition-colors inline-flex items-center gap-2">

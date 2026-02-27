@@ -29,9 +29,9 @@ export default function SelfHostPage() {
               <Terminal size={20} className="text-brand" />
             </div>
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Get started with DashClaw</h1>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Self-host your own governance control plane</h1>
               <p className="mt-2 text-zinc-400 max-w-2xl leading-relaxed">
-                Deploy free, access from anywhere — including your phone. You own the data.
+                Free to deploy. You own the data. Connect your first agent in under 10 minutes.
               </p>
             </div>
           </div>
