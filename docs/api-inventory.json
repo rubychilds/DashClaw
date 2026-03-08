@@ -46,10 +46,10 @@
     ]
   },
   "summary": {
-    "total_routes": 145,
+    "total_routes": 146,
     "stable_routes": 44,
     "beta_routes": 17,
-    "experimental_routes": 84
+    "experimental_routes": 85
   },
   "routes": [
     {
@@ -234,6 +234,15 @@
       "maturity": "experimental",
       "matched_prefix": "/api/calendar",
       "file": "app/api/calendar/route.js"
+    },
+    {
+      "path": "/api/chat",
+      "methods": [
+        "POST"
+      ],
+      "maturity": "experimental",
+      "matched_prefix": "(default)",
+      "file": "app/api/chat/route.js"
     },
     {
       "path": "/api/compliance/evidence",

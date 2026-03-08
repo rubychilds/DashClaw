@@ -10,7 +10,7 @@ import {
   GitBranch, Settings, Bug, Calendar, BarChart3, Coins,
   Clock, Webhook, Bell, FolderKanban, Network, Scale, FileCode,
   PanelLeftClose, PanelLeft, Menu, X, MessageCircle, Activity, SlidersHorizontal,
-  Shield,
+  Shield, BotMessageSquare,
 } from 'lucide-react';
 import DashClawLogo from './DashClawLogo';
 
@@ -69,6 +69,7 @@ const navGroups = [
   {
     label: 'Tools',
     items: [
+      { href: '/chat', icon: BotMessageSquare, label: 'Chat' },
       { href: '/bug-hunter', icon: Bug, label: 'Bug Hunter' },
       { href: '/calendar', icon: Calendar, label: 'Calendar' },
     ],

@@ -13,10 +13,10 @@ doc-type: architecture
 
 ## Summary
 
-- Total routes: `145`
+- Total routes: `146`
 - Stable routes: `44`
 - Beta routes: `17`
-- Experimental routes: `84`
+- Experimental routes: `85`
 
 ## Routes
 
@@ -41,6 +41,7 @@ doc-type: architecture
 | `/api/bounties` | `GET` | `experimental` | `/api/bounties` | `app/api/bounties/route.js` |
 | `/api/bug-hunter` | `GET, POST` | `experimental` | `(default)` | `app/api/bug-hunter/route.js` |
 | `/api/calendar` | `GET, POST` | `experimental` | `/api/calendar` | `app/api/calendar/route.js` |
+| `/api/chat` | `POST` | `experimental` | `(default)` | `app/api/chat/route.js` |
 | `/api/compliance/evidence` | `GET` | `experimental` | `(default)` | `app/api/compliance/evidence/route.js` |
 | `/api/compliance/exports` | `GET, POST` | `experimental` | `(default)` | `app/api/compliance/exports/route.js` |
 | `/api/compliance/exports/{exportId}` | `DELETE, GET` | `experimental` | `(default)` | `app/api/compliance/exports/[exportId]/route.js` |
