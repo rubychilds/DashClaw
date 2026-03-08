@@ -146,7 +146,7 @@ export default function ChatPage() {
     <PageLayout
       title="Chat"
       subtitle="Talk to your AI agent"
-      breadcrumbs={[{ label: 'Chat' }]}
+      breadcrumbs={['Chat']}
     >
       <div className="flex flex-col h-[calc(100vh-12rem)]">
         {/* Messages area */}
