@@ -3,7 +3,7 @@
 import Sidebar from './Sidebar';
 import NotificationCenter from './NotificationCenter';
 import AgentFilterDropdown from './AgentFilterDropdown';
-import UserMenu from './UserMenu';
+
 import RealtimeIndicator from './RealtimeIndicator';
 import DemoBanner from './DemoBanner';
 import SystemStatusBar from './SystemStatusBar';
@@ -38,7 +38,6 @@ export default function PageLayout({ title, subtitle, breadcrumbs, actions, chil
               <AgentFilterDropdown />
               {actions}
               <NotificationCenter />
-              <UserMenu />
             </div>
           </div>
         </header>

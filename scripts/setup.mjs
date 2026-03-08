@@ -144,7 +144,7 @@ async function main() {
         console.log('  Install Docker Desktop: https://www.docker.com/products/docker-desktop/');
         process.exit(1);
       }
-      env.DATABASE_URL = 'postgresql://dashclaw:dashclaw@localhost:5432/dashclaw';
+      env.DATABASE_URL = 'postgresql://dashclaw:dashclaw@localhost:5433/dashclaw';
       ok('Local Postgres running');
     } else if (choice === '2' || choice === '3') {
       const url = await ask('  Paste your PostgreSQL URL: ');
