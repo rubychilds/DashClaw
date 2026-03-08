@@ -2,33 +2,39 @@ export const dynamic = 'force-dynamic';
 
 import { getUserId } from '../../lib/org.js';
 
-const OPENCLAW_API_URL = process.env.OPENCLAW_API_URL;
-const OPENCLAW_API_TOKEN = process.env.OPENCLAW_API_TOKEN;
-
 export async function POST(request) {
   try {
     const userId = getUserId(request);
+    const orgId = request.headers.get('x-org-id') || '';
+
     if (!userId) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      return new Response(JSON.stringify({ error: 'Unauthorized', debug: { orgId, userId } }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    if (!OPENCLAW_API_URL || !OPENCLAW_API_TOKEN) {
-      return new Response(JSON.stringify({ error: 'OpenClaw not configured' }), {
+    const url = process.env.OPENCLAW_API_URL;
+    const token = process.env.OPENCLAW_API_TOKEN;
+
+    if (!url || !token) {
+      return new Response(JSON.stringify({
+        error: 'OpenClaw not configured',
+        debug: { hasUrl: !!url, hasToken: !!token },
+      }), {
         status: 503,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const { message } = await request.json();
+    const body = await request.json();
+    const message = body.message;
 
-    const openclawRes = await fetch(`${OPENCLAW_API_URL}/v1/responses`, {
+    const openclawRes = await fetch(`${url}/v1/responses`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENCLAW_API_TOKEN}`,
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
         model: 'openclaw',
@@ -73,7 +79,8 @@ export async function POST(request) {
       },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: 'Internal error' }), {
+    console.error('[chat] Error:', err);
+    return new Response(JSON.stringify({ error: err.message || 'Internal error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
