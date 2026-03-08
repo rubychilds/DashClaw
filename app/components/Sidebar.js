@@ -41,7 +41,6 @@ const navGroups = [
       { href: '/learning', icon: BookOpen, label: 'Learning' },
       { href: '/learning/analytics', icon: Zap, label: 'Learning Analytics' },
       { href: '/goals', icon: Target, label: 'Goals' },
-      { href: '/tokens', icon: Coins, label: 'Token Budget' },
     ],
   },
   {
@@ -49,10 +48,7 @@ const navGroups = [
     items: [
       { href: '/actions', icon: Zap, label: 'Decisions' },
       { href: '/approvals', icon: Clock, label: 'Approval Queue' },
-      { href: '/security', icon: ShieldAlert, label: 'Security' },
-      { href: '/policies', icon: Shield, label: 'Policies' },
       { href: '/routing', icon: Network, label: 'Task Routing' },
-      { href: '/compliance', icon: Scale, label: 'Compliance' },
       { href: '/evaluations', icon: BarChart3, label: 'Evaluations' },
       { href: '/scoring', icon: SlidersHorizontal, label: 'Scoring' },
       { href: '/prompts', icon: FileCode, label: 'Prompts' },
@@ -66,8 +62,6 @@ const navGroups = [
       { href: '/integrations', icon: Plug, label: 'Integrations' },
       { href: '/pairings', icon: CircleDot, label: 'Pairings' },
       { href: '/api-keys', icon: KeyRound, label: 'API Keys' },
-      { href: '/team', icon: UsersRound, label: 'Team' },
-      { href: '/usage', icon: BarChart3, label: 'Usage' },
       { href: '/activity', icon: Clock, label: 'Activity' },
       { href: '/webhooks', icon: Webhook, label: 'Webhooks' },
       { href: '/workflows', icon: GitBranch, label: 'Workflows' },
