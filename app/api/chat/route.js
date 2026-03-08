@@ -22,13 +22,7 @@ export async function POST(request) {
       });
     }
 
-    const { message, conversationHistory } = await request.json();
-
-    // Build input: conversation history + new message
-    const input = [
-      ...(conversationHistory || []),
-      { role: 'user', content: message },
-    ];
+    const { message } = await request.json();
 
     const openclawRes = await fetch(`${OPENCLAW_API_URL}/v1/responses`, {
       method: 'POST',
@@ -38,7 +32,7 @@ export async function POST(request) {
       },
       body: JSON.stringify({
         model: 'openclaw',
-        input,
+        input: message,
         stream: true,
         user: userId,
       }),
