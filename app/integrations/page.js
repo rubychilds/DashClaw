@@ -12,12 +12,34 @@ import { Card, CardHeader, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { StatCompact } from '../components/ui/Stat';
 
+const LOGO_TOKEN = process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN || '';
+
+function ProviderLogo({ domain, name, size = 24 }) {
+  const [failed, setFailed] = useState(false);
+
+  if (!domain || !LOGO_TOKEN || failed) {
+    return <Plug size={size} className="text-zinc-400" />;
+  }
+
+  return (
+    <img
+      src={`https://img.logo.dev/${domain}?token=${LOGO_TOKEN}&size=${size * 2}&format=png`}
+      alt={name}
+      width={size}
+      height={size}
+      className="rounded"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 // Integration configurations with their settings fields
 const INTEGRATION_CONFIGS = {
   // === AI PROVIDERS ===
   openai: {
     name: 'OpenAI',
     category: 'AI',
+    domain: 'openai.com',
     description: 'GPT models & embeddings',
     fields: [
       { key: 'OPENAI_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -27,6 +49,7 @@ const INTEGRATION_CONFIGS = {
   anthropic: {
     name: 'Anthropic',
     category: 'AI',
+    domain: 'anthropic.com',
     description: 'Claude models',
     fields: [
       { key: 'ANTHROPIC_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -35,6 +58,7 @@ const INTEGRATION_CONFIGS = {
   groq: {
     name: 'Groq',
     category: 'AI',
+    domain: 'groq.com',
     description: 'Ultra-fast LLM inference',
     fields: [
       { key: 'GROQ_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -43,6 +67,7 @@ const INTEGRATION_CONFIGS = {
   together: {
     name: 'Together AI',
     category: 'AI',
+    domain: 'together.ai',
     description: 'Open source model hosting',
     fields: [
       { key: 'TOGETHER_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -51,6 +76,7 @@ const INTEGRATION_CONFIGS = {
   replicate: {
     name: 'Replicate',
     category: 'AI',
+    domain: 'replicate.com',
     description: 'Run ML models in the cloud',
     fields: [
       { key: 'REPLICATE_API_TOKEN', label: 'API Token', type: 'password', required: true }
@@ -59,6 +85,7 @@ const INTEGRATION_CONFIGS = {
   huggingface: {
     name: 'Hugging Face',
     category: 'AI',
+    domain: 'huggingface.co',
     description: 'Models, datasets, spaces',
     fields: [
       { key: 'HUGGINGFACE_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -67,6 +94,7 @@ const INTEGRATION_CONFIGS = {
   perplexity: {
     name: 'Perplexity',
     category: 'AI',
+    domain: 'perplexity.ai',
     description: 'AI-powered search',
     fields: [
       { key: 'PERPLEXITY_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -75,6 +103,7 @@ const INTEGRATION_CONFIGS = {
   elevenlabs: {
     name: 'ElevenLabs',
     category: 'AI',
+    domain: 'elevenlabs.io',
     description: 'Text-to-speech voice generation',
     fields: [
       { key: 'ELEVENLABS_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -86,6 +115,7 @@ const INTEGRATION_CONFIGS = {
   neon: {
     name: 'Neon',
     category: 'Database',
+    domain: 'neon.tech',
     description: 'Serverless PostgreSQL',
     fields: [
       { key: 'DATABASE_URL', label: 'Connection String', type: 'password', required: true, placeholder: 'postgresql://user:pass@host/db' }
@@ -94,6 +124,7 @@ const INTEGRATION_CONFIGS = {
   supabase: {
     name: 'Supabase',
     category: 'Database',
+    domain: 'supabase.com',
     description: 'Postgres + Auth + Storage',
     fields: [
       { key: 'SUPABASE_URL', label: 'Project URL', type: 'text', required: true },
@@ -104,6 +135,7 @@ const INTEGRATION_CONFIGS = {
   planetscale: {
     name: 'PlanetScale',
     category: 'Database',
+    domain: 'planetscale.com',
     description: 'Serverless MySQL',
     fields: [
       { key: 'PLANETSCALE_URL', label: 'Connection String', type: 'password', required: true }
@@ -112,6 +144,7 @@ const INTEGRATION_CONFIGS = {
   mongodb: {
     name: 'MongoDB',
     category: 'Database',
+    domain: 'mongodb.com',
     description: 'NoSQL document database',
     fields: [
       { key: 'MONGODB_URI', label: 'Connection URI', type: 'password', required: true }
@@ -120,6 +153,7 @@ const INTEGRATION_CONFIGS = {
   redis: {
     name: 'Redis',
     category: 'Database',
+    domain: 'redis.io',
     description: 'In-memory cache & data store',
     fields: [
       { key: 'REDIS_URL', label: 'Connection URL', type: 'password', required: true }
@@ -128,6 +162,7 @@ const INTEGRATION_CONFIGS = {
   pinecone: {
     name: 'Pinecone',
     category: 'Database',
+    domain: 'pinecone.io',
     description: 'Vector database for AI',
     fields: [
       { key: 'PINECONE_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -139,6 +174,7 @@ const INTEGRATION_CONFIGS = {
   telegram: {
     name: 'Telegram',
     category: 'Communication',
+    domain: 'telegram.org',
     description: 'Chat bot interface',
     fields: [
       { key: 'TELEGRAM_BOT_TOKEN', label: 'Bot Token', type: 'password', required: true },
@@ -148,6 +184,7 @@ const INTEGRATION_CONFIGS = {
   discord: {
     name: 'Discord',
     category: 'Communication',
+    domain: 'discord.com',
     description: 'Community & bot platform',
     fields: [
       { key: 'DISCORD_BOT_TOKEN', label: 'Bot Token', type: 'password', required: true },
@@ -158,6 +195,7 @@ const INTEGRATION_CONFIGS = {
   slack: {
     name: 'Slack',
     category: 'Communication',
+    domain: 'slack.com',
     description: 'Workspace messaging',
     fields: [
       { key: 'SLACK_BOT_TOKEN', label: 'Bot Token', type: 'password', required: true },
@@ -168,6 +206,7 @@ const INTEGRATION_CONFIGS = {
   twilio: {
     name: 'Twilio',
     category: 'Communication',
+    domain: 'twilio.com',
     description: 'SMS & voice APIs',
     fields: [
       { key: 'TWILIO_ACCOUNT_SID', label: 'Account SID', type: 'text', required: true },
@@ -178,6 +217,7 @@ const INTEGRATION_CONFIGS = {
   resend: {
     name: 'Resend',
     category: 'Communication',
+    domain: 'resend.com',
     description: 'Developer-first email API',
     fields: [
       { key: 'RESEND_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -186,6 +226,7 @@ const INTEGRATION_CONFIGS = {
   sendgrid: {
     name: 'SendGrid',
     category: 'Communication',
+    domain: 'sendgrid.com',
     description: 'Email delivery service',
     fields: [
       { key: 'SENDGRID_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -196,6 +237,7 @@ const INTEGRATION_CONFIGS = {
   google: {
     name: 'Google Workspace',
     category: 'Productivity',
+    domain: 'google.com',
     description: 'Calendar, Gmail, Drive',
     fields: [
       { key: 'GOOGLE_ACCOUNT', label: 'Account Email', type: 'email', required: true },
@@ -205,6 +247,7 @@ const INTEGRATION_CONFIGS = {
   notion: {
     name: 'Notion',
     category: 'Productivity',
+    domain: 'notion.so',
     description: 'Workspace & documentation',
     fields: [
       { key: 'NOTION_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -214,6 +257,7 @@ const INTEGRATION_CONFIGS = {
   linear: {
     name: 'Linear',
     category: 'Productivity',
+    domain: 'linear.app',
     description: 'Issue tracking for teams',
     fields: [
       { key: 'LINEAR_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -222,6 +266,7 @@ const INTEGRATION_CONFIGS = {
   airtable: {
     name: 'Airtable',
     category: 'Productivity',
+    domain: 'airtable.com',
     description: 'Spreadsheet-database hybrid',
     fields: [
       { key: 'AIRTABLE_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -231,6 +276,7 @@ const INTEGRATION_CONFIGS = {
   calendly: {
     name: 'Calendly',
     category: 'Productivity',
+    domain: 'calendly.com',
     description: 'Scheduling automation',
     fields: [
       { key: 'CALENDLY_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -241,6 +287,7 @@ const INTEGRATION_CONFIGS = {
   github: {
     name: 'GitHub',
     category: 'Development',
+    domain: 'github.com',
     description: 'Code repos & version control',
     fields: [
       { key: 'GITHUB_TOKEN', label: 'Personal Access Token', type: 'password', required: true },
@@ -250,6 +297,7 @@ const INTEGRATION_CONFIGS = {
   vercel: {
     name: 'Vercel',
     category: 'Development',
+    domain: 'vercel.com',
     description: 'Frontend deployment',
     fields: [
       { key: 'VERCEL_TOKEN', label: 'API Token', type: 'password', required: true },
@@ -259,6 +307,7 @@ const INTEGRATION_CONFIGS = {
   railway: {
     name: 'Railway',
     category: 'Development',
+    domain: 'railway.app',
     description: 'Full-stack deployment',
     fields: [
       { key: 'RAILWAY_TOKEN', label: 'API Token', type: 'password', required: true }
@@ -267,6 +316,7 @@ const INTEGRATION_CONFIGS = {
   cloudflare: {
     name: 'Cloudflare',
     category: 'Development',
+    domain: 'cloudflare.com',
     description: 'CDN, DNS, Workers',
     fields: [
       { key: 'CLOUDFLARE_API_TOKEN', label: 'API Token', type: 'password', required: true },
@@ -276,6 +326,7 @@ const INTEGRATION_CONFIGS = {
   sentry: {
     name: 'Sentry',
     category: 'Development',
+    domain: 'sentry.io',
     description: 'Error detection & reporting',
     fields: [
       { key: 'SENTRY_DSN', label: 'DSN', type: 'password', required: true },
@@ -287,6 +338,7 @@ const INTEGRATION_CONFIGS = {
   twitter: {
     name: 'Twitter/X',
     category: 'Social',
+    domain: 'x.com',
     description: 'Social media integration',
     fields: [
       { key: 'TWITTER_API_KEY', label: 'API Key', type: 'password', required: true },
@@ -298,6 +350,7 @@ const INTEGRATION_CONFIGS = {
   brave: {
     name: 'Brave Search',
     category: 'Social',
+    domain: 'brave.com',
     description: 'Web search API',
     fields: [
       { key: 'BRAVE_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -316,6 +369,7 @@ const INTEGRATION_CONFIGS = {
   stripe: {
     name: 'Stripe',
     category: 'Payments',
+    domain: 'stripe.com',
     description: 'Payment processing',
     fields: [
       { key: 'STRIPE_SECRET_KEY', label: 'Secret Key', type: 'password', required: true },
@@ -326,6 +380,7 @@ const INTEGRATION_CONFIGS = {
   lemonsqueezy: {
     name: 'Lemon Squeezy',
     category: 'Payments',
+    domain: 'lemonsqueezy.com',
     description: 'Merchant of record',
     fields: [
       { key: 'LEMONSQUEEZY_API_KEY', label: 'API Key', type: 'password', required: true }
@@ -728,8 +783,8 @@ export default function IntegrationsPage() {
               <div className="p-5" onClick={() => isAdmin ? openEditor(key) : null}>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-surface-tertiary rounded-lg flex items-center justify-center">
-                      <Plug size={16} className="text-zinc-400" />
+                    <div className="w-10 h-10 bg-surface-tertiary rounded-lg flex items-center justify-center overflow-hidden">
+                      <ProviderLogo domain={config.domain} name={config.name} size={20} />
                     </div>
                     <div>
                       <div className="text-sm font-medium text-white">{config.name}</div>
