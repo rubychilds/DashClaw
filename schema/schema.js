@@ -1,9 +1,11 @@
 import { pgTable, text, timestamp, integer, boolean, uniqueIndex, numeric, customType, serial, real, jsonb, pgEnum } from 'drizzle-orm/pg-core';
 
-// Custom vector type for pgvector
+// Custom vector type for pgvector (requires pgvector extension)
+// Conditionally defined: falls back to text when pgvector is unavailable
+const PGVECTOR_AVAILABLE = process.env.PGVECTOR_AVAILABLE === 'true';
 const vector = customType({
   dataType() {
-    return 'vector(1536)';
+    return PGVECTOR_AVAILABLE ? 'vector(1536)' : 'text';
   },
 });
 
