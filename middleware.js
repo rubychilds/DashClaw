@@ -1623,7 +1623,7 @@ export async function middleware(request) {
 
 
         // SECURITY: Users on org_default are only allowed to access onboarding and health APIs
-        const ONBOARDING_PREFIXES = ['/api/onboarding', '/api/setup', '/api/health'];
+        const ONBOARDING_PREFIXES = ['/api/onboarding', '/api/setup', '/api/health', '/api/chat'];
         const isAllowedForOnboarding = ONBOARDING_PREFIXES.some(p => pathname.startsWith(p));
 
         if (orgId === 'org_default' && !isAllowedForOnboarding) {
